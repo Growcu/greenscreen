@@ -37,14 +37,14 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.sourceImage = new System.Windows.Forms.PictureBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.outputImage = new System.Windows.Forms.PictureBox();
             this.labelSourceImage = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.sourceImage)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.outputImage)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -140,15 +140,17 @@
             this.sourceImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.sourceImage.TabIndex = 8;
             this.sourceImage.TabStop = false;
+            this.sourceImage.Click += new System.EventHandler(this.sourceImage_Click);
             // 
-            // pictureBox2
+            // outputImage
             // 
-            this.pictureBox2.Location = new System.Drawing.Point(490, 82);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(265, 318);
-            this.pictureBox2.TabIndex = 9;
-            this.pictureBox2.TabStop = false;
-            this.pictureBox2.Click += new System.EventHandler(this.pictureBox2_Click);
+            this.outputImage.Location = new System.Drawing.Point(490, 82);
+            this.outputImage.Name = "outputImage";
+            this.outputImage.Size = new System.Drawing.Size(265, 318);
+            this.outputImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.outputImage.TabIndex = 9;
+            this.outputImage.TabStop = false;
+            this.outputImage.Click += new System.EventHandler(this.pictureBox2_Click);
             // 
             // labelSourceImage
             // 
@@ -204,7 +206,7 @@
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.labelSourceImage);
-            this.Controls.Add(this.pictureBox2);
+            this.Controls.Add(this.outputImage);
             this.Controls.Add(this.sourceImage);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -218,7 +220,7 @@
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.sourceImage)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.outputImage)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -235,7 +237,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.PictureBox sourceImage;
-        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.PictureBox outputImage;
         private System.Windows.Forms.Label labelSourceImage;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
