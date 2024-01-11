@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace green_screen_ja
@@ -14,17 +10,22 @@ namespace green_screen_ja
         /// Główny punkt wejścia dla aplikacji.
         /// </summary>
 
-        [DllImport(@"C:\projekty\green-screen-ja\x64\Debug\JAAsm.dll")]
+        [DllImport(@"C:\projekty\greenscreen\x64\Debug\JAAsm.dll")]
         static extern int MyProc1(int a, int b);
+
+        [DllImport("CppLib.dll")]
+        static extern int DLLTestFn(int a, int b);
 
         [STAThread]
         static void Main()
         {
-
             int x = 5, y = 3;
-            int retVal = MyProc1(x, y);
-            Console.Write("Moja pierwsza wartość obliczona w asm to:");
-            Console.WriteLine(retVal);
+            int asmDLL = MyProc1(x, y);
+            int cppDLL = DLLTestFn(x, y);
+            Console.Write("ASM: ");
+            Console.WriteLine(asmDLL);
+            Console.Write("CPP: ");
+            Console.WriteLine(cppDLL);
             Console.ReadLine();
 
             //Application.EnableVisualStyles();
