@@ -35,7 +35,7 @@
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.button2 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
+            this.labelTime = new System.Windows.Forms.Label();
             this.sourceImage = new System.Windows.Forms.PictureBox();
             this.outputImage = new System.Windows.Forms.PictureBox();
             this.labelSourceImage = new System.Windows.Forms.Label();
@@ -43,8 +43,13 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.threadsTrackBar = new System.Windows.Forms.TrackBar();
+            this.labelThreadsTrackBarValue = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.sourceImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.outputImage)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.threadsTrackBar)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -102,7 +107,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(12, 217);
+            this.button2.Location = new System.Drawing.Point(12, 286);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 5;
@@ -113,7 +118,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(11, 243);
+            this.label3.Location = new System.Drawing.Point(11, 312);
             this.label3.Name = "label3";
             this.label3.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.label3.Size = new System.Drawing.Size(33, 13);
@@ -121,16 +126,16 @@
             this.label3.Text = "Time:";
             this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
-            // label4
+            // labelTime
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(14, 256);
-            this.label4.Name = "label4";
-            this.label4.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label4.Size = new System.Drawing.Size(76, 13);
-            this.label4.TabIndex = 7;
-            this.label4.Text = "00:00:00.0000";
-            this.label4.Click += new System.EventHandler(this.label4_Click);
+            this.labelTime.AutoSize = true;
+            this.labelTime.Location = new System.Drawing.Point(14, 325);
+            this.labelTime.Name = "labelTime";
+            this.labelTime.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.labelTime.Size = new System.Drawing.Size(76, 13);
+            this.labelTime.TabIndex = 7;
+            this.labelTime.Text = "00:00:00.0000";
+            this.labelTime.Click += new System.EventHandler(this.label4_Click);
             // 
             // sourceImage
             // 
@@ -140,7 +145,6 @@
             this.sourceImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.sourceImage.TabIndex = 8;
             this.sourceImage.TabStop = false;
-            this.sourceImage.Click += new System.EventHandler(this.sourceImage_Click);
             // 
             // outputImage
             // 
@@ -195,12 +199,53 @@
             this.label9.Size = new System.Drawing.Size(100, 3);
             this.label9.TabIndex = 14;
             // 
+            // label5
+            // 
+            this.label5.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.label5.Location = new System.Drawing.Point(12, 271);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(100, 3);
+            this.label5.TabIndex = 15;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(11, 214);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(49, 13);
+            this.label10.TabIndex = 16;
+            this.label10.Text = "Threads:";
+            // 
+            // threadsTrackBar
+            // 
+            this.threadsTrackBar.AutoSize = false;
+            this.threadsTrackBar.Location = new System.Drawing.Point(5, 230);
+            this.threadsTrackBar.Maximum = 6;
+            this.threadsTrackBar.Name = "threadsTrackBar";
+            this.threadsTrackBar.Size = new System.Drawing.Size(115, 27);
+            this.threadsTrackBar.SmallChange = 0;
+            this.threadsTrackBar.TabIndex = 17;
+            this.threadsTrackBar.Scroll += new System.EventHandler(this.threadsTrackBar_Scroll);
+            // 
+            // labelThreadsTrackBarValue
+            // 
+            this.labelThreadsTrackBarValue.AutoSize = true;
+            this.labelThreadsTrackBarValue.Location = new System.Drawing.Point(57, 214);
+            this.labelThreadsTrackBarValue.Name = "labelThreadsTrackBarValue";
+            this.labelThreadsTrackBarValue.Size = new System.Drawing.Size(13, 13);
+            this.labelThreadsTrackBarValue.TabIndex = 18;
+            this.labelThreadsTrackBarValue.Text = "1";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Gainsboro;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.labelThreadsTrackBarValue);
+            this.Controls.Add(this.threadsTrackBar);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
@@ -208,7 +253,7 @@
             this.Controls.Add(this.labelSourceImage);
             this.Controls.Add(this.outputImage);
             this.Controls.Add(this.sourceImage);
-            this.Controls.Add(this.label4);
+            this.Controls.Add(this.labelTime);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.radioButton2);
@@ -221,6 +266,7 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.sourceImage)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.outputImage)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.threadsTrackBar)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -235,7 +281,7 @@
         private System.Windows.Forms.RadioButton radioButton2;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label labelTime;
         private System.Windows.Forms.PictureBox sourceImage;
         private System.Windows.Forms.PictureBox outputImage;
         private System.Windows.Forms.Label labelSourceImage;
@@ -243,6 +289,10 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.TrackBar threadsTrackBar;
+        private System.Windows.Forms.Label labelThreadsTrackBarValue;
     }
 }
 

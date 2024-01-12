@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 
@@ -121,6 +122,9 @@ namespace green_screen_ja
 
         private void button2_Click(object sender, EventArgs e)
         {
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+
             imageStore.Pixels = this.toPixels(imageStore.InputImage);
             byte[] arrayRgbColorBytes = this.getRgbColorBytes(); // ToDo args
             RunCppDll(imageStore.Pixels, arrayRgbColorBytes, imageStore.GetPixelsSize());
@@ -129,6 +133,9 @@ namespace green_screen_ja
             imageStore.OutputImage.Save(memoryStream, ImageFormat.Png);
             memoryStream.Position = 0;
             outputImage.Image = imageStore.OutputImage;
+
+            stopWatch.Stop();
+            labelTime.Text = stopWatch.Elapsed.ToString();
         }
 
         private void label3_Click(object sender, EventArgs e)
@@ -173,9 +180,14 @@ namespace green_screen_ja
 
         }
 
-        private void sourceImage_Click(object sender, EventArgs e)
+        private void label10_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void threadsTrackBar_Scroll(object sender, EventArgs e)
+        {
+            labelThreadsTrackBarValue.Text = Math.Pow(2, threadsTrackBar.Value).ToString();
         }
     }
 }
