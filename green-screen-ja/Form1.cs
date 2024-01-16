@@ -19,7 +19,12 @@ namespace green_screen_ja
         [DllImport(@"C:\projekty\greenscreen\x64\Debug\CppLib.dll")]
         public static extern unsafe void removeGreenScreenCPP(byte* pixelArray, byte* colorRgbBytes, int size);
 
+        [DllImport(@"C:\projekty\greenscreen\x64\Debug\JAAsm.dll")]
+        public static extern unsafe void removeGreenScreenASM(byte* pixelArray, byte* colorRgbBytes, int size);
+
         private ImageStore imageStore;
+
+        private bool isASM = true;
 
         public Form1()
         {
@@ -94,6 +99,20 @@ namespace green_screen_ja
             }
         }
 
+        private void RunASMDll(byte[] pixelArray, byte[] colorToRemoveRgb, int size)
+        {
+            unsafe
+            {
+                fixed (byte* colorToRemoveRgbPtr = &colorToRemoveRgb[0])
+                {
+                    fixed (byte* pixelArrayPtr = &pixelArray[0])
+                    {
+                        removeGreenScreenASM(pixelArrayPtr, colorToRemoveRgbPtr, size);
+                    }
+                }
+            }
+        }
+
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -117,7 +136,7 @@ namespace green_screen_ja
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
-
+            isASM = true;
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -125,17 +144,32 @@ namespace green_screen_ja
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
 
-            imageStore.Pixels = this.toPixels(imageStore.InputImage);
-            byte[] arrayRgbColorBytes = this.getRgbColorBytes(); // ToDo args
-            RunCppDll(imageStore.Pixels, arrayRgbColorBytes, imageStore.GetPixelsSize());
-            imageStore.OutputImage = this.toOutputBitmap(imageStore.Pixels, imageStore.GetInputWidth(), imageStore.GetInputHeight());
-            MemoryStream memoryStream = new MemoryStream();
-            imageStore.OutputImage.Save(memoryStream, ImageFormat.Png);
-            memoryStream.Position = 0;
-            outputImage.Image = imageStore.OutputImage;
+            if (imageStore == null)
+            {
+                MessageBox.Show("You have to choose file first", "Warning");
+            } else
+            {
+                imageStore.Pixels = this.toPixels(imageStore.InputImage);
+                byte[] arrayRgbColorBytes = this.getRgbColorBytes(); // ToDo args
 
-            stopWatch.Stop();
-            labelTime.Text = stopWatch.Elapsed.ToString();
+                if (isASM)
+                {
+                    RunASMDll(imageStore.Pixels, arrayRgbColorBytes, imageStore.GetPixelsSize());
+                }
+                else
+                {
+                    RunCppDll(imageStore.Pixels, arrayRgbColorBytes, imageStore.GetPixelsSize());
+                }
+
+                imageStore.OutputImage = this.toOutputBitmap(imageStore.Pixels, imageStore.GetInputWidth(), imageStore.GetInputHeight());
+                MemoryStream memoryStream = new MemoryStream();
+                imageStore.OutputImage.Save(memoryStream, ImageFormat.Png);
+                memoryStream.Position = 0;
+                outputImage.Image = imageStore.OutputImage;
+
+                stopWatch.Stop();
+                labelTime.Text = stopWatch.Elapsed.ToString();
+            }
         }
 
         private void label3_Click(object sender, EventArgs e)
@@ -188,6 +222,11 @@ namespace green_screen_ja
         private void threadsTrackBar_Scroll(object sender, EventArgs e)
         {
             labelThreadsTrackBarValue.Text = Math.Pow(2, threadsTrackBar.Value).ToString();
+        }
+
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+            isASM = false;
         }
     }
 }
