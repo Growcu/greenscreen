@@ -1,4 +1,5 @@
-﻿using green_screen_ja.Models;
+﻿using green_screen_ja.Helpers;
+using green_screen_ja.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -16,10 +17,10 @@ namespace green_screen_ja
     public partial class Form1 : Form
     {
 
-        [DllImport(@"C:\projekty\greenscreen\x64\Debug\CppLib.dll")]
+        [DllImport(@"C:\projekty\green-screen-ja\x64\Debug\CppLib.dll")]
         public static extern unsafe void removeGreenScreenCPP(byte* pixelArray, byte* colorRgbBytes, int size);
 
-        [DllImport(@"C:\projekty\greenscreen\x64\Debug\JAAsm.dll")]
+        [DllImport(@"C:\projekty\green-screen-ja\x64\Debug\JAAsm.dll")]
         public static extern unsafe void removeGreenScreenASM(byte* pixelArray, byte* colorRgbBytes, int size);
 
         private ImageStore imageStore;
@@ -114,26 +115,6 @@ namespace green_screen_ja
         }
 
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
             isASM = true;
@@ -152,14 +133,23 @@ namespace green_screen_ja
                 imageStore.Pixels = this.toPixels(imageStore.InputImage);
                 byte[] arrayRgbColorBytes = this.getRgbColorBytes(); // ToDo args
 
+                int treads = Int32.Parse(labelThreadsTrackBarValue.Text);
+                //int treads = Int32.Parse("1");
+
+                List<byte[]> arrayList = ThreadsManager.SplitPixelArray(imageStore.Pixels, treads);
+
                 if (isASM)
                 {
-                    RunASMDll(imageStore.Pixels, arrayRgbColorBytes, imageStore.GetPixelsSize());
+                    ThreadsManager.RunThreads(new Action<byte[], byte[], int>(this.RunASMDll),
+                           arrayList, arrayRgbColorBytes, treads);
                 }
                 else
                 {
-                    RunCppDll(imageStore.Pixels, arrayRgbColorBytes, imageStore.GetPixelsSize());
+                    ThreadsManager.RunThreads(new Action<byte[], byte[], int>(this.RunCppDll),
+                           arrayList, arrayRgbColorBytes, treads);
                 }
+
+                imageStore.Pixels = ThreadsManager.MergeArray(arrayList);
 
                 imageStore.OutputImage = this.toOutputBitmap(imageStore.Pixels, imageStore.GetInputWidth(), imageStore.GetInputHeight());
                 MemoryStream memoryStream = new MemoryStream();
@@ -170,21 +160,6 @@ namespace green_screen_ja
                 stopWatch.Stop();
                 labelTime.Text = stopWatch.Elapsed.ToString();
             }
-        }
-
-        private void label3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label4_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label5_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void fileSelectButton_Click(object sender, EventArgs e)
@@ -207,16 +182,6 @@ namespace green_screen_ja
                 imageStore = new ImageStore { InputImage = new Bitmap(openFileDialog.FileName) };
                
             }
-        }
-
-        private void pictureBox2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label10_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void threadsTrackBar_Scroll(object sender, EventArgs e)

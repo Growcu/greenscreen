@@ -61,7 +61,6 @@
             this.label1.Size = new System.Drawing.Size(282, 39);
             this.label1.TabIndex = 0;
             this.label1.Text = "Green Screen JA";
-            this.label1.Click += new System.EventHandler(this.label1_Click_1);
             // 
             // fileSelectButton
             // 
@@ -125,7 +124,6 @@
             this.label3.Size = new System.Drawing.Size(33, 13);
             this.label3.TabIndex = 6;
             this.label3.Text = "Time:";
-            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // labelTime
             // 
@@ -136,7 +134,6 @@
             this.labelTime.Size = new System.Drawing.Size(76, 13);
             this.labelTime.TabIndex = 7;
             this.labelTime.Text = "00:00:00.0000";
-            this.labelTime.Click += new System.EventHandler(this.label4_Click);
             // 
             // sourceImage
             // 
@@ -155,7 +152,6 @@
             this.outputImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.outputImage.TabIndex = 9;
             this.outputImage.TabStop = false;
-            this.outputImage.Click += new System.EventHandler(this.pictureBox2_Click);
             // 
             // labelSourceImage
             // 
@@ -165,7 +161,6 @@
             this.labelSourceImage.Size = new System.Drawing.Size(72, 13);
             this.labelSourceImage.TabIndex = 10;
             this.labelSourceImage.Text = "Source image";
-            this.labelSourceImage.Click += new System.EventHandler(this.label5_Click);
             // 
             // label6
             // 
@@ -264,7 +259,6 @@
             this.Controls.Add(this.label1);
             this.Name = "Form1";
             this.Text = "Form1";
-            this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.sourceImage)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.outputImage)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.threadsTrackBar)).EndInit();
