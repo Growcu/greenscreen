@@ -7,9 +7,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Runtime.InteropServices;
-using System.Threading;
 using System.Windows.Forms;
-using System.Windows.Forms.VisualStyles;
 
 
 namespace green_screen_ja
@@ -17,10 +15,10 @@ namespace green_screen_ja
     public partial class Form1 : Form
     {
 
-        [DllImport(@"C:\projekty\green-screen-ja\x64\Debug\CppLib.dll")]
+        [DllImport(@"C:\projekty\greenscreen\x64\Debug\CppLib.dll")]
         public static extern unsafe void removeGreenScreenCPP(byte* pixelArray, byte* colorRgbBytes, int size);
 
-        [DllImport(@"C:\projekty\green-screen-ja\x64\Debug\JAAsm.dll")]
+        [DllImport(@"C:\projekty\greenscreen\x64\Debug\JAAsm.dll")]
         public static extern unsafe void removeGreenScreenASM(byte* pixelArray, byte* colorRgbBytes, int size);
 
         private ImageStore imageStore;
@@ -54,18 +52,6 @@ namespace green_screen_ja
                 }
             }
             return pixelArray;
-        }
-
-        private byte[] getRgbColorBytes()
-        {
-           
-                byte[] colorRgbBytes = new byte[3];
-                colorRgbBytes[0] = 62;
-                colorRgbBytes[1] = 255;
-                colorRgbBytes[2] = 40;
-
-                return colorRgbBytes;
-      
         }
 
         private Bitmap toOutputBitmap(byte[] pixelArray, int width, int height)
@@ -120,7 +106,7 @@ namespace green_screen_ja
             isASM = true;
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void startButton_Click(object sender, EventArgs e)
         {
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
@@ -131,22 +117,21 @@ namespace green_screen_ja
             } else
             {
                 imageStore.Pixels = this.toPixels(imageStore.InputImage);
-                byte[] arrayRgbColorBytes = this.getRgbColorBytes(); // ToDo args
+                byte[] arrayRgbColorBytes = new byte[3] { 62, 255, 40 };
 
-                int treads = Int32.Parse(labelThreadsTrackBarValue.Text);
-                //int treads = Int32.Parse("1");
+                int threads = Int32.Parse(labelThreadsTrackBarValue.Text);
 
-                List<byte[]> arrayList = ThreadsManager.SplitPixelArray(imageStore.Pixels, treads);
+                List<byte[]> arrayList = ThreadsManager.SplitPixelArray(imageStore.Pixels, threads);
 
                 if (isASM)
                 {
                     ThreadsManager.RunThreads(new Action<byte[], byte[], int>(this.RunASMDll),
-                           arrayList, arrayRgbColorBytes, treads);
+                           arrayList, arrayRgbColorBytes, threads);
                 }
                 else
                 {
                     ThreadsManager.RunThreads(new Action<byte[], byte[], int>(this.RunCppDll),
-                           arrayList, arrayRgbColorBytes, treads);
+                           arrayList, arrayRgbColorBytes, threads);
                 }
 
                 imageStore.Pixels = ThreadsManager.MergeArray(arrayList);
