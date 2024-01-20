@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
@@ -24,6 +25,8 @@ namespace green_screen_ja
         private ImageStore imageStore;
 
         private bool isASM = true;
+
+        private Queue<TimeSpan> timeQueue = new Queue<TimeSpan>();
 
         public Form1()
         {
@@ -143,7 +146,18 @@ namespace green_screen_ja
                 outputImage.Image = imageStore.OutputImage;
 
                 stopWatch.Stop();
-                labelTime.Text = stopWatch.Elapsed.ToString();
+                TimeSpan time = stopWatch.Elapsed;
+                labelTime.Text = time.ToString();
+
+                if(Int32.Parse(avgCount.Text) < 5)
+                    avgCount.Text = (Int32.Parse(avgCount.Text) + 1).ToString();
+
+                if (timeQueue.Count >= 5)
+                    timeQueue.Dequeue();
+
+                timeQueue.Enqueue(time);
+                TimeSpan averageTime = new TimeSpan((long)timeQueue.Average(t => t.Ticks));
+                avgTimeLabel.Text = averageTime.ToString();
             }
         }
 

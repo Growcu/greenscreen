@@ -47,6 +47,10 @@
             this.label10 = new System.Windows.Forms.Label();
             this.threadsTrackBar = new System.Windows.Forms.TrackBar();
             this.labelThreadsTrackBarValue = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.avgCount = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.avgTimeLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.sourceImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.outputImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.threadsTrackBar)).BeginInit();
@@ -232,12 +236,56 @@
             this.labelThreadsTrackBarValue.TabIndex = 18;
             this.labelThreadsTrackBarValue.Text = "1";
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(12, 358);
+            this.label4.Name = "label4";
+            this.label4.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.label4.Size = new System.Drawing.Size(51, 13);
+            this.label4.TabIndex = 19;
+            this.label4.Text = "Avg time:";
+            // 
+            // avgCount
+            // 
+            this.avgCount.AutoSize = true;
+            this.avgCount.Location = new System.Drawing.Point(59, 358);
+            this.avgCount.Name = "avgCount";
+            this.avgCount.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.avgCount.Size = new System.Drawing.Size(13, 13);
+            this.avgCount.TabIndex = 20;
+            this.avgCount.Text = "0";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(69, 358);
+            this.label12.Name = "label12";
+            this.label12.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.label12.Size = new System.Drawing.Size(21, 13);
+            this.label12.TabIndex = 21;
+            this.label12.Text = "/ 5";
+            // 
+            // avgTimeLabel
+            // 
+            this.avgTimeLabel.AutoSize = true;
+            this.avgTimeLabel.Location = new System.Drawing.Point(14, 371);
+            this.avgTimeLabel.Name = "avgTimeLabel";
+            this.avgTimeLabel.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.avgTimeLabel.Size = new System.Drawing.Size(76, 13);
+            this.avgTimeLabel.TabIndex = 22;
+            this.avgTimeLabel.Text = "00:00:00.0000";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Gainsboro;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.avgTimeLabel);
+            this.Controls.Add(this.label12);
+            this.Controls.Add(this.avgCount);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.labelThreadsTrackBarValue);
             this.Controls.Add(this.threadsTrackBar);
             this.Controls.Add(this.label10);
@@ -288,6 +336,10 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TrackBar threadsTrackBar;
         private System.Windows.Forms.Label labelThreadsTrackBarValue;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label avgCount;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label avgTimeLabel;
     }
 }
 
